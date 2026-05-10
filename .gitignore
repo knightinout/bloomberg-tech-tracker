@@ -1,0 +1,41 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/*.log
+*.log
+
+# Reports (optional - uncomment if you don't want to commit reports)
+# reports/daily/*.md
+# reports/weekly_review_master.md
+
+# API Keys and Secrets
+config/config.json
+.env
+*.key
+
+# Keep example config
+!config/config.json.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Processed videos tracking
+config/processed_videos.json

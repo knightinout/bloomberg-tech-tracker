@@ -1,0 +1,41 @@
+{
+  "api_keys": {
+    "gemini_api_key": "YOUR_GEMINI_API_KEY_HERE",
+    "youtube_api_key": "OPTIONAL_YOUTUBE_API_KEY"
+  },
+  "youtube": {
+    "channel_name": "Bloomberg Technology",
+    "channel_id": "UCrM7B7SL_g1edFOnmj-SDKg",
+    "search_term": "Bloomberg Technology",
+    "video_duration_min": 30
+  },
+  "gemini": {
+    "model": "gemini-pro",
+    "temperature": 0.7,
+    "max_tokens": 8192,
+    "system_prompt": "You are a financial technology analyst specializing in tech stocks and market trends. Analyze the Bloomberg Technology video transcript and provide actionable insights for traders and investors.",
+    "analysis_prompts": {
+      "daily_summary": "Summarize the key technology news stories discussed in this Bloomberg Technology episode. Focus on: 1) Major company announcements, 2) Market movements, 3) Regulatory developments, 4) Emerging trends, 5) Expert commentary.",
+      "trading_insights": "Extract trading-relevant insights from this transcript. Identify: 1) Stock-specific news and price movements, 2) Sector trends (AI, cloud, semiconductors, etc.), 3) Analyst predictions, 4) Risk factors, 5) Investment opportunities mentioned.",
+      "key_takeaways": "Provide 5-7 bullet points of the most important takeaways from this episode that a tech investor should know.",
+      "weekly_highlights": "Identify the most important points from this episode that should be included in a weekly review. Focus on high-impact news, significant market movements, and strategic insights."
+    }
+  },
+  "output": {
+    "daily_reports_dir": "reports/daily",
+    "master_doc_path": "reports/weekly_review_master.md",
+    "video_tracking_file": "config/processed_videos.json",
+    "date_format": "%Y-%m-%d",
+    "report_filename_format": "{date}_bloomberg_tech.md"
+  },
+  "automation": {
+    "check_time": "09:00",
+    "timezone": "America/New_York",
+    "retry_attempts": 3,
+    "retry_delay_seconds": 60
+  },
+  "logging": {
+    "log_file": "logs/automation.log",
+    "log_level": "INFO"
+  }
+}
