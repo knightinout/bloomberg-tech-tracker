@@ -2,22 +2,20 @@
 
 Automated system to fetch, analyze, and generate daily reports on Bloomberg Technology shows using Google Gemini AI.
 
-Bloomberg Tech has a daily 44 min episode on Weekdays covering tech sector related financial news and reporting
-Example Video
-May 09 2025, Bloomberg Tech Video
-https://www.youtube.com/watch?v=_IQ25TPiqOo
+Bloomberg Tech has a daily 44 min episode on Weekdays covering tech sector related financial news and reporting.
 
+**Example Video** — May 09 2025, Bloomberg Tech Video
+[https://www.youtube.com/watch?v=_IQ25TPiqOo](https://www.youtube.com/watch?v=_IQ25TPiqOo)
 
-Complete Playlist Bloomberg Tech Videos
-https://www.youtube.com/playlist?list=PLfAX25ZLrPGTygCwn55voYZ_LYyKjxokJ
+**Complete Playlist** — Bloomberg Tech Videos
+[https://www.youtube.com/playlist?list=PLfAX25ZLrPGTygCwn55voYZ_LYyKjxokJ](https://www.youtube.com/playlist?list=PLfAX25ZLrPGTygCwn55voYZ_LYyKjxokJ)
 
-## Suggest manual try 
-watch the episode
-https://www.youtube.com/watch?v=_IQ25TPiqOo
+## Suggest Manual Try
 
-Paste in gemini chat and ask summary 
+Watch the episode:
+[https://www.youtube.com/watch?v=_IQ25TPiqOo](https://www.youtube.com/watch?v=_IQ25TPiqOo)
 
-
+Paste in Gemini chat and ask for a summary.
 
 ## Features
 
