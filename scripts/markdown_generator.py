@@ -1,6 +1,6 @@
 """
 Markdown Report Generator Module
-Generates daily reports and updates the master weekly review document.
+Generates daily reports from Bloomberg Technology video analysis.
 """
 
 import os
@@ -23,13 +23,11 @@ class MarkdownGenerator:
         """
         self.config = config
         self.daily_reports_dir = config['output']['daily_reports_dir']
-        self.master_doc_path = config['output']['master_doc_path']
         self.date_format = config['output']['date_format']
         self.filename_format = config['output']['report_filename_format']
 
-        # Ensure directories exist
+        # Ensure directory exists
         os.makedirs(self.daily_reports_dir, exist_ok=True)
-        os.makedirs(os.path.dirname(self.master_doc_path), exist_ok=True)
 
     def generate_daily_report(self, analysis_results: Dict, date: datetime = None) -> str:
         """
@@ -106,104 +104,6 @@ class MarkdownGenerator:
 
         return content
 
-    def update_master_doc(self, analysis_results: Dict, date: datetime = None):
-        """
-        Update the master weekly review document with mini-summary.
-
-        Args:
-            analysis_results: Dictionary containing analysis data
-            date: Date for the entry (defaults to today)
-        """
-        try:
-            if date is None:
-                date = datetime.now()
-
-            date_str = date.strftime(self.date_format)
-            logger.info(f"Updating master doc for {date_str}")
-
-            # Extract mini-summary (5 lines)
-            metadata = analysis_results.get('video_metadata', {})
-            mini_summary = analysis_results.get('mini_summary', '')
-
-            # Create entry content
-            entry = self._build_master_doc_entry(
-                date_str,
-                metadata,
-                mini_summary
-            )
-
-            # Check if master doc exists
-            if not os.path.exists(self.master_doc_path):
-                # Create new master doc with header
-                self._create_new_master_doc()
-
-            # Append entry to master doc
-            with open(self.master_doc_path, 'a', encoding='utf-8') as f:
-                f.write('\n' + entry + '\n')
-
-            logger.info("Master doc updated successfully")
-
-        except Exception as e:
-            logger.error(f"Error updating master doc: {str(e)}")
-            raise
-
-    def _build_master_doc_entry(
-        self,
-        date_str: str,
-        metadata: Dict,
-        mini_summary: str
-    ) -> str:
-        """Build a concise entry for the master document - 5 lines only."""
-
-        entry = f"""## {date_str} - [{metadata.get('title', 'N/A')}]({metadata.get('url', '#')})
-
-{mini_summary}
-
----
-"""
-        return entry
-
-    def _create_new_master_doc(self):
-        """Create a new master document with header."""
-
-        header = f"""# Bloomberg Technology - Weekly Review Master Document
-
-This document contains important points and highlights from Bloomberg Technology episodes for weekly review.
-
-**Last Updated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-
----
-
-"""
-        with open(self.master_doc_path, 'w', encoding='utf-8') as f:
-            f.write(header)
-
-        logger.info("Created new master document")
-
-    def get_weekly_summary(self, start_date: datetime = None) -> str:
-        """
-        Extract entries from the last week for review.
-
-        Args:
-            start_date: Start date for weekly summary (defaults to 7 days ago)
-
-        Returns:
-            Formatted weekly summary
-        """
-        try:
-            if not os.path.exists(self.master_doc_path):
-                return "No master document found."
-
-            with open(self.master_doc_path, 'r', encoding='utf-8') as f:
-                content = f.read()
-
-            # For simplicity, return the entire document
-            # In a more sophisticated version, we could parse dates and filter
-            return content
-
-        except Exception as e:
-            logger.error(f"Error generating weekly summary: {str(e)}")
-            return f"Error: {str(e)}"
 
 
 def test_generator():
@@ -235,10 +135,6 @@ def test_generator():
     # Generate daily report
     report_path = generator.generate_daily_report(sample_results)
     print(f"Generated daily report: {report_path}")
-
-    # Update master doc
-    generator.update_master_doc(sample_results)
-    print(f"Updated master doc: {generator.master_doc_path}")
 
 
 if __name__ == "__main__":

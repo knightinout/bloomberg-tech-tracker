@@ -78,10 +78,38 @@ class GeminiAnalyzer:
 
     def analyze_transcript(self, transcript: str, video_metadata: Dict) -> Optional[Dict]:
         """
-        Legacy method - use analyze_video instead for better results.
+        Analyze a video using its text transcript.
+
+        Args:
+            transcript: Full video transcript text
+            video_metadata: Dictionary with video information
+
+        Returns:
+            Dictionary containing all analysis results or None on failure
         """
-        logger.warning("Using legacy transcript analysis - consider using analyze_video() instead")
-        return self.analyze_video(video_metadata.get('url', ''), video_metadata)
+        try:
+            logger.info("Starting transcript-based video analysis...")
+
+            analysis_results = {
+                'video_metadata': video_metadata,
+                'daily_summary': self._generate_analysis(
+                    transcript,
+                    self.analysis_prompts['daily_summary'],
+                    "Daily Summary"
+                ),
+                'trading_insights': self._generate_analysis(
+                    transcript,
+                    self.analysis_prompts['trading_insights'],
+                    "Trading Insights"
+                ),
+            }
+
+            logger.info("Completed transcript-based video analysis")
+            return analysis_results
+
+        except Exception as e:
+            logger.error(f"Error during transcript analysis: {str(e)}")
+            return None
 
     def _generate_video_analysis(
         self,

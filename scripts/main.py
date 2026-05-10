@@ -120,30 +120,34 @@ class BloombergTechAutomation:
             logger.info(f"Found video: {video['title']}")
             logger.info(f"Video URL: {video['url']}")
 
-            # Step 2: Analyze video directly with Gemini (no transcript needed!)
-            logger.info("Step 2: Analyzing video with Gemini AI (using native video understanding)...")
-            analysis_results = self.gemini_analyzer.analyze_video(
-                video['url'],
+            # Step 2: Fetch transcript
+            logger.info("Step 2: Fetching video transcript...")
+            transcript = self.youtube_fetcher.get_transcript(video['video_id'])
+            if not transcript:
+                logger.error("Failed to fetch transcript. Aborting.")
+                return False
+            logger.info(f"Transcript fetched ({len(transcript)} characters)")
+
+            # Step 3: Analyze transcript with Gemini AI
+            logger.info("Step 3: Analyzing transcript with Gemini AI...")
+
+            analysis_results = self.gemini_analyzer.analyze_transcript(
+                transcript,
                 video
             )
 
             if not analysis_results:
-                logger.error("Failed to analyze video. Aborting.")
+                logger.error("Failed to analyze transcript. Aborting.")
                 return False
 
-            logger.info("Video analysis completed successfully")
+            logger.info("Transcript analysis completed successfully")
 
-            # Step 3: Generate daily report
-            logger.info("Step 3: Generating daily markdown report...")
+            # Step 4: Generate daily report
+            logger.info("Step 4: Generating daily markdown report...")
             report_path = self.markdown_generator.generate_daily_report(
                 analysis_results
             )
             logger.info(f"Daily report generated: {report_path}")
-
-            # Step 4: Update master doc
-            logger.info("Step 4: Updating master weekly review document...")
-            self.markdown_generator.update_master_doc(analysis_results)
-            logger.info("Master document updated")
 
             # Step 5: Mark video as processed
             logger.info("Step 5: Marking video as processed...")

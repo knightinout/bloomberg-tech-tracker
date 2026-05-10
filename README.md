@@ -1,17 +1,32 @@
 # Bloomberg Technology Automation
 
-Automated system to fetch, analyze, and report on Bloomberg Technology daily shows using Google Gemini AI.
+Automated system to fetch, analyze, and generate daily reports on Bloomberg Technology shows using Google Gemini AI.
+
+Bloomberg Tech has a daily 44 min episode on Weekdays covering tech sector related financial news and reporting
+Example Video
+May 09 2025, Bloomberg Tech Video
+https://www.youtube.com/watch?v=_IQ25TPiqOo
+
+
+Complete Playlist Bloomberg Tech Videos
+https://www.youtube.com/playlist?list=PLfAX25ZLrPGTygCwn55voYZ_LYyKjxokJ
+
+## Suggest manual try 
+watch the episode
+https://www.youtube.com/watch?v=_IQ25TPiqOo
+
+Paste in gemini chat and ask summary 
+
+
 
 ## Features
 
 - **Automated Video Fetching**: Automatically discovers the latest Bloomberg Technology videos from YouTube
 - **Transcript Extraction**: Downloads video transcripts/captions
 - **AI-Powered Analysis**: Uses Google Gemini to generate:
-  - Daily summaries of key tech news
-  - Trading insights for tech stocks
-  - Key takeaways for investors
-  - Weekly highlights for review
-- **Markdown Reports**: Generates daily reports and maintains a master weekly review document
+  - 15 key moments with timestamps
+  - 10 actionable trading insights for tech stocks
+- **Daily Markdown Reports**: Saves one report per episode to `reports/daily/`
 - **Smart Tracking**: Prevents duplicate processing of videos
 - **Scheduled Execution**: Run automatically via cron or Task Scheduler
 
@@ -26,8 +41,7 @@ bloomberg-tech-tracker/
 │   ├── markdown_generator.py      # Report generator
 │   └── setup_scheduler.py         # Scheduler setup utility
 ├── reports/
-│   ├── daily/                     # Daily markdown reports
-│   └── weekly_review_master.md    # Master weekly review doc
+│   └── daily/                     # Daily markdown reports (one per episode)
 ├── config/
 │   ├── config.json               # Configuration file
 │   └── processed_videos.json     # Tracks processed videos
@@ -165,16 +179,8 @@ Generated in `reports/daily/` with filename format: `YYYY-MM-DD_bloomberg_tech.m
 
 Each report contains:
 - Video metadata (title, URL, date, duration)
-- Daily summary of tech news
-- Trading insights for tech stocks
-- Key takeaways
-- Weekly highlights
-
-### Master Weekly Review Document
-
-Located at `reports/weekly_review_master.md`
-
-Contains accumulated highlights and important points for weekly review of tech news and trading opportunities.
+- 15 key moments with timestamps
+- 10 trading insights for tech stocks
 
 ## Configuration
 
@@ -207,7 +213,7 @@ Or fall back to `config/config.json`:
 ### Gemini Settings
 ```json
 "gemini": {
-  "model": "gemini-pro",
+  "model": "gemini-2.5-flash",
   "temperature": 0.7,
   "analysis_prompts": { ... }
 }
@@ -240,7 +246,7 @@ Or fall back to `config/config.json`:
 ### Transcript not available
 
 - **Cause**: Video doesn't have captions/transcript
-- **Solution**: System will skip video and try next one automatically
+- **Solution**: System logs the error and exits; try again when the next video is published
 
 ### Import errors
 
@@ -281,8 +287,7 @@ Edit the `analysis_prompts` section in `config/config.json` to customize what Ge
 ```json
 "analysis_prompts": {
   "daily_summary": "Your custom prompt here...",
-  "trading_insights": "Your custom prompt here...",
-  ...
+  "trading_insights": "Your custom prompt here..."
 }
 ```
 
@@ -300,7 +305,7 @@ Edit `scripts/markdown_generator.py` to customize report layout and formatting.
 
 1. **Check logs regularly**: Monitor `logs/automation.log` for issues
 2. **Review API usage**: Keep track of Gemini API quota
-3. **Backup reports**: Periodically backup `reports/` directory
+3. **Backup reports**: Periodically backup `reports/daily/` directory
 4. **Update dependencies**: Run `pip install -U -r requirements.txt` monthly
 5. **Customize prompts**: Adjust prompts based on your trading focus
 
